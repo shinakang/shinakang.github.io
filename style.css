@@ -1,0 +1,721 @@
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/*╔══════════════════════════════════════════════════════════╗
+  ║  GLOBALS / STRUCTURE / SYSTEM                            ║
+  ╚══════════════════════════════════════════════════════════╝*/
+
+  /* ─────────────────────────────────────────────────────────
+  GLOBAL VARIABLES */
+    :root {
+      --off-black:    #191918;
+      --off-white:    #f9f7ed;
+      --light-brown:  #3f3228;
+      --purple:       #c4b5c7;
+      --dark-purple:  #8c7690;
+      --yellow:       #fceeb3;
+      --sidebar-w:    230px;
+      --font-narkiss: "narkiss-asaf-variable", sans-serif;
+      --font-inter:   'inter', sans-serif;
+      --slide-dur:    0.65s;
+      --slide-ease:     cubic-bezier(0.22, 1, 0.36, 1);
+      --slide-ease-in:  cubic-bezier(0.64, 0, 0.78, 0); }
+    body.dark { --light-brown: var(--purple); }
+    body.dark { --off-black: #191918; }
+
+  /* ─────────────────────────────────────────────────────────
+  BASE BODY */
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      font-family: var(--font-narkiss);
+      background: var(--off-white);
+      color: var(--off-black);
+      cursor: none;
+      font-size: 14px;
+      transition: background 0.3s, color 0.3s; }
+    body.dark { background: var(--off-black); color: var(--off-white); }
+
+  /* ─────────────────────────────────────────────────────────
+  CUSTOM CURSOR */
+    #cursor {
+      position: fixed; width: 8px; height: 8px;
+      border-radius: 50%; background: var(--off-black);
+      pointer-events: none; z-index: 9999999;
+      transform: translate(-50%, -50%);
+      transition: width 0.18s, height 0.18s, opacity 0.18s, background 0.3s; }
+    #cursor.big { width: 18px; height: 18px; opacity: 0.35; }
+    body.dark #cursor { background: var(--purple); }
+
+  /* ─────────────────────────────────────────────────────────
+  CUSTOM SCROLLBAR */
+    ::-webkit-scrollbar { width: 2px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--light-brown); border-radius: 2px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--off-black); }
+    body.dark ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
+    * { scrollbar-width: thin; scrollbar-color: var(--light-brown) transparent; }
+
+  /* ─────────────────────────────────────────────────────────
+  SCROLL CONTAINER
+  Fixed + overflow-y:scroll so it's the scroll root.
+  No scroll-snap so the sticky reel animation runs freely. */
+    #scroll-wrap {
+      position: fixed;
+      inset: 0;
+      overflow-y: scroll; }
+    #scroll-wrap.scroll-locked { overflow-y: hidden; }
+    #scroll-wrap {
+    scrollbar-width: none; }
+  #scroll-wrap::-webkit-scrollbar {
+    display: none; }
+
+  /* ─────────────────────────────────────────────────────────
+  MOBILE BLOCK
+  Full-screen overlay shown on viewports narrower than 768px. */
+    #mobile-block {
+      display: none;
+      position: fixed; inset: 0; z-index: 999999;
+      background: var(--off-black); color: var(--off-white);
+      align-items: center; justify-content: center;
+      text-align: center; padding: 40px;
+      font-family: var(--font-inter); }
+    #mobile-block p { font-size: 14px; line-height: 1.8; opacity: 0.7; margin-top: 12px; }
+    #mobile-block .tear { font-size: 40px; margin-bottom: 16px; }
+    @media (max-width: 768px) {
+      #mobile-block { display: flex; flex-direction: column; } }
+
+
+/*╔══════════════════════════════════════════════════════════╗
+  ║  REEL SECTION                                            ║
+  ╚══════════════════════════════════════════════════════════╝*/
+
+  /* ─────────────────────────────────────────────────────────
+  REEL SHELL + SECTION
+  Shell is 300vh — gives the scroll container space to drive
+  the JS animation. Section is sticky so the video stays at
+  100vh while the shell scrolls past it. */
+    #reel-shell {
+      height: 300vh;
+      width: 100%; }
+
+    #reel-section {
+      position: sticky;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #0b0b01;
+      overflow: hidden; }
+
+  /* ─────────────────────────────────────────────────────────
+  REEL VIDEO */
+    .reel-video-wrap {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: #111110;
+      display: flex; align-items: center; justify-content: center;
+      will-change: transform;
+      overflow: hidden; }
+    .reel-video-wrap video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; display: block; }
+
+  /* ─────────────────────────────────────────────────────────
+  REEL BIO  — drifts down then exits in phase 2 (driven by JS) */
+    .reel-bio {
+      position: absolute;
+      top: 48px; left: 0; right: 0;
+      z-index: 10;
+      text-align: center;
+      padding: 0 8vw;
+      color: var(--off-white);
+      font-family: var(--font-narkiss);
+      font-size: clamp(16px, 2.2vw, 28px);
+      font-weight: 300;
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+      will-change: transform, opacity;
+      pointer-events: none; }
+
+  /* ─────────────────────────────────────────────────────────
+  REEL FOOTER — fades out through the whole scroll */
+    .reel-footer {
+      position: absolute;
+      bottom: 36px; left: 0; right: 0;
+      display: flex;
+      align-items: center; justify-content: center; gap: 32px;
+      z-index: 10;
+      will-change: transform, opacity; }
+
+    .reel-placeholder-text {
+      font-family: var(--font-inter); font-size: 11px;
+      letter-spacing: 0.14em; color: #555552;
+      text-transform: uppercase; text-align: center; line-height: 2.2;
+      position: relative; z-index: 1; }
+
+    .reel-name-label {
+      font-family: var(--font-inter); font-size: 11px;
+      color: #444442; letter-spacing: 0.1em; text-transform: uppercase; }
+    .reel-hint {
+      font-family: var(--font-inter); font-size: 10px;
+      color: #333331; letter-spacing: 0.12em; text-transform: uppercase;
+      animation: pulse 2.5s ease infinite; }
+    @keyframes pulse { 0%,100% { opacity: 0.4 } 50% { opacity: 1 } }
+
+
+/*╔══════════════════════════════════════════════════════════╗
+  ║  SITE SECTION (main portfolio layout)                    ║
+  ╚══════════════════════════════════════════════════════════╝*/
+
+  /* ─────────────────────────────────────────────────────────
+  SITE SECTION
+  Full-viewport flex row: sidebar | handle | main-wrap */
+    #site-section {
+      height: 100vh; width: 100%;
+      display: flex; overflow: hidden;
+      background: var(--off-white);
+      transition: background 0.3s;
+      position: relative; }
+    body.dark #site-section { background: var(--off-black); }
+
+
+/*╔══════════════════════════════════════════════════════════╗
+  ║  SIDEBAR                                                 ║
+  ╚══════════════════════════════════════════════════════════╝*/
+
+  /* ─────────────────────────────────────────────────────────
+  SIDEBAR CONTAINER
+  flex-shrink:0 keeps it from collapsing when main-wrap grows.
+  width transitions for the JS-driven auto-collapse. */
+    #sidebar {
+      width: var(--sidebar-w);
+      min-width: 110px;
+      max-width: 360px;
+      height: 100vh;
+      border-right: 2px solid transparent;
+      border-image: repeating-linear-gradient(
+        to bottom,
+        var(--light-brown) 0px, var(--light-brown) 2px,
+        transparent 2px, transparent 6px) 1;
+      padding: 36px 28px 32px;
+      display: flex; flex-direction: column;
+      flex-shrink: 0; overflow-y: auto;
+      background: var(--purple);
+      transition: background 0.3s, border-color 0.3s,
+                  width 0.5s cubic-bezier(0.22,1,0.36,1);
+      position: relative; z-index: 30; }
+    body.dark #sidebar {
+      background: var(--off-black);
+      border-image: repeating-linear-gradient(
+        to bottom,
+        var(--dark-purple) 0px, var(--dark-purple) 2px,
+        transparent 2px, transparent 6px) 1;}
+
+  /* ─────────────────────────────────────────────────────────
+  SIDEBAR — NAME / HOME BUTTON */
+    .sidebar-name {
+      font-family: var(--font-narkiss); font-size: 20px; font-weight: 400;
+      letter-spacing: 0.06em;
+      margin-bottom: 44px; cursor: none;
+      transition: opacity 0.2s; display: inline-block;
+      background: none; border: none; color: inherit; padding: 0;
+      text-align: left; white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+    .sidebar-name:hover { font-style: italic; }
+
+  /* ─────────────────────────────────────────────────────────
+  SIDEBAR — NAV GROUPS */
+    .nav-group { margin-bottom: 28px; }
+    .nav-group-label {
+      font-family: var(--font-narkiss); font-size: 9px;
+      letter-spacing: 0.14em; color: var(--light-brown);
+      margin-bottom: 10px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* ─────────────────────────────────────────────────────────
+  FILTER CHECKBOXES
+  Square checkbox with filled state when active.
+  Labels abbreviate via .filter-label-abbr at narrow widths. */
+    .filter-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 3px 0; cursor: none;
+      font-family: var(--font-inter); font-size: 13px; font-weight: 300;
+      letter-spacing: 0.01em; line-height: 1.6;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+      user-select: none; }
+    .filter-item:hover { opacity: 0.8; font-style: italic; }
+    .filter-item.checked { opacity: 1; font-weight: 400; }
+    .filter-item.checked:hover { opacity: 0.6; font-style: normal; }
+
+    /* Checkbox square */
+    .filter-check {
+      width: 10px; height: 10px;
+      border: 1.5px solid var(--light-brown);
+      border-radius: 1px; flex-shrink: 0;
+      position: relative;
+      transition: background 0.15s, border-color 0.15s;
+      background: transparent; }
+    .filter-item.checked .filter-check { background: var(--light-brown); }
+    body.dark .filter-item .filter-check { border-color: var(--dark-purple); }
+    body.dark .filter-item.checked .filter-check { background: var(--dark-purple); }
+
+  /* ─────────────────────────────────────────────────────────
+  SIDEBAR NARROW MODE
+  JS sets data-narrow="true" on #sidebar when width < 130px.
+  Full labels hide, abbreviated labels show. */
+    .filter-label-full  { display: inline; }
+    .filter-label-abbr  { display: none; }
+    #sidebar[data-narrow="true"] .filter-label-full { display: none; }
+    #sidebar[data-narrow="true"] .filter-label-abbr { display: inline; }
+    #sidebar[data-narrow="true"] .nav-group-label   { font-size: 8px; }
+    #sidebar[data-narrow="true"] .sidebar-name      { font-size: 14px; }
+    #sidebar[data-narrow="true"] #modeLabel         { display: none; }
+    #sidebar[data-narrow="true"] .mode-toggle       { justify-content: center; }
+
+  /* ─────────────────────────────────────────────────────────
+  SIDEBAR — NAV LINKS (About, Archive) */
+    .nav-link {
+      font-family: var(--font-inter);
+      display: block; font-size: 13px; font-weight: 300;
+      padding: 3px 0; text-decoration: none; color: inherit;
+      opacity: 0.4; transition: opacity 0.2s; cursor: none;
+      letter-spacing: 0.01em; line-height: 1.6;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .nav-link:hover { font-style: italic; opacity: 0.75; }
+    .nav-link.active { font-style: italic; opacity: 1; font-weight: 400; }
+
+  /* ─────────────────────────────────────────────────────────
+  SIDEBAR — FOOTER + DARK MODE TOGGLE */
+    .sidebar-footer { margin-top: auto; padding-top: 28px; }
+    .mode-toggle {
+      display: flex; align-items: center; gap: 10px;
+      background: none; border: none;
+      font-family: var(--font-inter); font-size: 9px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--light-brown); cursor: none; padding: 0;
+      transition: color 0.2s; }
+    .mode-toggle:hover { color: var(--off-black); }
+    body.dark .mode-toggle { color: var(--dark-purple); }
+    body.dark .mode-toggle:hover { color: var(--dark-purple); }
+
+    /* Pill toggle shape */
+    .pill { width: 30px; height: 15px; border: 0.5px solid currentColor; border-radius: 8px; position: relative; }
+    .pill-dot {
+      position: absolute; top: 2.5px; left: 2.5px;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: currentColor; transition: left 0.2s; }
+    body.dark .pill-dot { left: 17px; }
+
+  /* ─────────────────────────────────────────────────────────
+  SIDEBAR RESIZE HANDLE
+  Invisible 5px strip — JS attaches col-resize drag to it. */
+    #handle {
+      width: 5px; flex-shrink: 0;
+      cursor: col-resize;
+      position: relative; z-index: 20; }
+
+
+/*╔══════════════════════════════════════════════════════════╗
+  ║  MAIN CONTENT AREA                                       ║
+  ╚══════════════════════════════════════════════════════════╝*/
+
+  /* ─────────────────────────────────────────────────────────
+  MAIN WRAP + MAIN
+  main-wrap: flex: 1 fills remaining width after sidebar.
+  position:relative + overflow:hidden clips the project
+  overlay so it never bleeds behind the sidebar. */
+    #main-wrap {
+      flex: 1; min-width: 0;
+      height: 100vh;
+      position: relative;
+      overflow: hidden; }
+
+    #main {
+      position: absolute; inset: 0;
+      overflow-y: auto;
+      padding: 40px 44px 80px; }
+
+  /* ─────────────────────────────────────────────────────────
+  SECTION LABEL (e.g. "All Works") */
+    .section-label {
+      font-family: var(--font-narkiss); font-size: 10px;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--light-brown); margin-bottom: 28px;
+      transition: opacity 0.3s; }
+
+  /* ─────────────────────────────────────────────────────────
+  MASONRY GRID
+  JS builds 3 .proj-col divs and distributes cards l→r so
+  visual read order is 1 2 3 / 4 5 6 / … while each column
+  stacks flush (no column-count gaps). */
+    #project-grid {
+      display: flex; gap: 16px; align-items: flex-start;
+      position: relative; }
+    .proj-col {
+      display: flex; flex-direction: column;
+      flex: 1; min-width: 0; }
+
+  /* ─────────────────────────────────────────────────────────
+  PROJECT CARDS */
+    .proj-card {
+      break-inside: unset; margin-bottom: 0;
+      cursor: none;
+      transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), opacity 0.3s ease; }
+    .proj-card:hover { transform: rotate(1.5deg) scale(1.03); }
+
+    /* Filter animation states */
+    .proj-card.card-hidden { opacity: 0; transform: scale(0.96) translateY(6px); pointer-events: none; }
+    .proj-card.card-gone   { display: none; }
+
+    .proj-img-ph {
+      width: 100%; background: #e0ddd6; overflow: hidden; }
+    .proj-img-ph video { width: 100%; height: auto; display: block; }
+    .proj-img-ph img   { width: 100%; height: auto; display: block; }
+    body.dark .proj-img-ph { background: #252523; color: #3a3a38; }
+    .proj-card:hover .proj-img-ph { opacity: 0.85; }
+
+    .proj-card-title { font-size: 12px; font-weight: 400; margin-top: 8px; }
+    .proj-card-cat   { font-family: var(--font-inter); font-size: 10px; color: var(--light-brown); opacity: 0.6; margin-top: 2px; letter-spacing: 0.04em; }
+    .proj-card-divider { width: 100%; height: 0; opacity: 0.2; margin-top: 20px; }
+    body.dark .proj-card-divider { border-top-color: var(--off-white); }
+
+
+/*╔══════════════════════════════════════════════════════════╗
+  ║  ABOUT / CONTACT PAGE                                    ║
+  ╚══════════════════════════════════════════════════════════╝*/
+
+    .page { display: none; }
+    .page.active { display: block; animation: fadeUp 0.35s ease; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); } }
+
+    .about-layout {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 56px; margin-bottom: 60px; }
+    .about-text {
+      font-family: var(--font-inter); font-size: 14px;
+      font-weight: 300; line-height: 2; opacity: 0.7; }
+    .about-text p { margin-bottom: 20px; }
+    .about-img-ph {
+      aspect-ratio: 3/4; background: #e0ddd6;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-inter); font-size: 10px; color: #bbb9b2; }
+    body.dark .about-img-ph { background: #252523; color: #3a3a38; }
+
+    .contact-section-label {
+      font-family: var(--font-narkiss); font-size: 10px;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--light-brown); margin-bottom: 20px; }
+    .contact-list { display: flex; flex-direction: column; }
+    .contact-line {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 14px 0; border-bottom: 0.5px solid var(--off-black);
+      font-size: 14px; cursor: none; transition: opacity 0.2s; }
+    body.dark .contact-line { border-bottom-color: rgba(255,255,255,0.07); }
+    .contact-line:hover { opacity: 0.55; }
+    .contact-label {
+      font-family: var(--font-inter); font-size: 9px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--light-brown); }
+    .contact-value { font-size: 14px; font-weight: 300; }
+
+
+/*╔══════════════════════════════════════════════════════════╗
+  ║  PROJECT OVERLAY                                         ║
+  ╚══════════════════════════════════════════════════════════╝*/
+
+  /* ─────────────────────────────────────────────────────────
+  SLIDE KEYFRAMES */
+    @keyframes slideInRight {
+      from { transform: translateX(100%); }
+      to   { transform: translateX(0); } }
+    @keyframes slideOutRight {
+      from { transform: translateX(0); }
+      to   { transform: translateX(100%); } }
+
+  /* ─────────────────────────────────────────────────────────
+  OVERLAY CONTAINER
+  position:absolute inside #main-wrap means it is naturally
+  bounded by the flex child — it will never overlap the
+  sidebar. left:-3px corrects the dashed border optical gap. */
+    #project-overlay {
+      position: absolute;
+      top: 0; bottom: 0;
+      left: -3px; right: 0;
+      display: none;
+      z-index: 20;
+      overflow: hidden; }
+    #project-overlay.open    { display: block; }
+    #project-overlay.closing { display: block; }
+
+  /* ─────────────────────────────────────────────────────────
+  LAYER 1 — description / meta column
+  Fills the full overlay area; layer 2 sits on top of it,
+  starting at the right edge of .proj-col-text.
+  Opaque background blocks the grid behind it. */
+    #proj-layer1 {
+      position: absolute;
+      top: 0; bottom: 0; left: 0; right: 0;
+      background: var(--off-white);
+      transition: background 0.3s;
+      transform: translateX(100%);
+      z-index: 2;
+      display: flex; }
+    body.dark #proj-layer1 { background: var(--off-black); }
+
+    /* Dashed left border on layer 1 */
+    #proj-layer1::before {
+      content: '';
+      position: absolute; top: 0; bottom: 0; left: 0;
+      width: 2px; z-index: 10; pointer-events: none;
+      border-image: repeating-linear-gradient(
+        to bottom,
+        var(--light-brown) 0px, var(--light-brown) 2px,
+        transparent 2px, transparent 6px) 1; }
+    body.dark #proj-layer1::before {
+      border-image: repeating-linear-gradient(
+        to bottom,
+        var(--dark-purple) 0px, var(--dark-purple) 2px,
+        transparent 2px, transparent 6px) 1; }
+
+        
+    #project-overlay.open    #proj-layer1 { animation: slideInRight  var(--slide-dur) var(--slide-ease)    0s    both; }
+    #project-overlay.closing #proj-layer1 { animation: slideOutRight var(--slide-dur) var(--slide-ease-in) 0.15s both; }
+
+  /* ─────────────────────────────────────────────────────────
+  DESCRIPTION TEXT COLUMN (inside layer 1)
+  Width here must match #proj-layer2 left offset below.
+  The JS resize handler keeps them in sync on drag. */
+    .proj-col-text {
+      width: 420px; min-width: 200px; max-width: 1200px;
+      height: 100%; overflow-y: auto;
+      padding: 36px 28px 60px;
+      flex-shrink: 0;
+      background: transparent;
+      position: relative; }
+
+  /* ─────────────────────────────────────────────────────────
+  LAYER 2 — image column
+  left: 420px + 5px handle = 425px, matching .proj-col-text.
+  JS resize handler updates this dynamically on drag. */
+    #proj-layer2 {
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 425px; right: 0;     /* ← keep in sync with .proj-col-text width + handle */
+      background: var(--off-white);
+      transition: background 0.3s;
+      transform: translateX(100%);
+      z-index: 3;
+      overflow: hidden; }
+    body.dark #proj-layer2 { background: var(--off-black); }
+
+    /* Dashed left border on layer 2 */
+    #proj-layer2::before {
+      content: '';
+      position: absolute; top: 0; bottom: 0; left: 0;
+      width: 2px; z-index: 10; pointer-events: none;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        var(--light-brown) 0px, var(--light-brown) 2px,
+        transparent 2px, transparent 6px); }
+    body.dark #proj-layer2::before {
+      background-image: repeating-linear-gradient(
+        to bottom,
+        var(--dark-purple) 0px, var(--dark-purple) 2px,
+        transparent 2px, transparent 6px); }
+
+    #project-overlay.open    #proj-layer2 { animation: slideInRight  var(--slide-dur) var(--slide-ease)    0.3s  both; }
+    #project-overlay.closing #proj-layer2 { animation: slideOutRight var(--slide-dur) var(--slide-ease-in) 0s    both; }
+
+  /* ─────────────────────────────────────────────────────────
+  COLUMN RESIZE HANDLE (between layer 1 text and layer 2) */
+    #proj-handle {
+      position: absolute; top: 0; bottom: 0; left: 0;
+      width: 5px; border: none;
+      cursor: col-resize; z-index: 1; }
+
+  /* ─────────────────────────────────────────────────────────
+  IMAGE SCROLL AREA (inside layer 2) */
+    .proj-col-images-scroll {
+      margin-left: 5px;
+      height: 100%; overflow-y: auto;
+      padding: 36px 36px 60px; }
+
+
+/*╔══════════════════════════════════════════════════════════╗
+  ║  PROJECT PAGE CONTENT                                    ║
+  ╚══════════════════════════════════════════════════════════╝*/
+
+  /* ─────────────────────────────────────────────────────────
+  BACK BUTTON */
+    .back-btn {
+      font-family: var(--font-narkiss); font-size: 18px;
+      color: var(--light-brown); background: none; border: none;
+      cursor: none; padding: 0; margin-bottom: 28px;
+      display: inline-flex; align-items: center;
+      transition: color 0.2s, transform 0.2s; }
+    .back-btn:hover { color: inherit; transform: translateX(-3px); }
+
+  /* ─────────────────────────────────────────────────────────
+  META BAR — 2-column grid of Date / Skills / Outputs / With / For / Through */
+    .project-meta-bar {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px 12px;
+      padding-bottom: 24px; margin-bottom: 24px;
+      transition: border-color 0.3s; }
+    .meta-item.hidden { display: none; }
+    .meta-label {
+      font-family: var(--font-narkiss); font-size: 9px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--purple); }
+    .meta-value { font-size: 12px; font-weight: 400; }
+
+  /* ─────────────────────────────────────────────────────────
+  DIVIDER between meta bar and title / description */
+    .proj-meta-divider {
+      height: 0; border-top: 0.5px solid var(--light-brown);
+      margin: 24px 0; transition: border-color 0.3s; }
+    body.dark .proj-meta-divider { border-top-color: var(--dark-purple); }
+
+
+    .project-title-big {
+      font-size: 18px; font-weight: 300; margin-bottom: 24px;
+      letter-spacing: -0.01em; line-height: 1.3; }
+    .project-desc {
+      font-family: var(--font-inter); font-size: 14px;
+      font-weight: 300; line-height: 1.6; }
+    .project-desc p { margin-bottom: 1em; }
+    .project-desc p:last-child { margin-bottom: 0; }
+
+    .project-desc a {
+      color: var(--dark-purple);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .project-desc a:hover {
+      opacity: 0.6;
+    }
+
+/*╔══════════════════════════════════════════════════════════╗
+  ║  IMAGE COLUMN LAYOUT BLOCKS                              ║
+  ║  Block types: image | video | slideshow | overlap |      ║
+  ║               sidebyside | placeholder                   ║
+  ╚══════════════════════════════════════════════════════════╝*/
+
+    .project-images-stack { display: flex; flex-direction: column; gap: 0; }
+
+  /* ─────────────────────────────────────────────────────────
+  SINGLE IMAGE / VIDEO BLOCK */
+    .img-block { margin-bottom: 32px; }
+    .img-block img, .img-block video { width: 100%; display: block; height: auto; }
+
+  /* Placeholder when no src supplied */
+    .img-placeholder {
+      width: 100%; background: #e0ddd6; min-height: 180px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-inter); font-size: 10px; color: #bbb9b2; }
+    body.dark .img-placeholder { background: #252523; color: #3a3a38; }
+
+  /* Size modifiers */
+    .img-block.full-bleed { margin-left: -36px; margin-right: -36px; margin-bottom: 36px; }
+    .img-block.small      { width: 60%; margin-bottom: 28px; }
+    .img-block.small.right  { margin-left: auto; }
+    .img-block.small.center { margin-left: auto; margin-right: auto; }
+
+  /* ─────────────────────────────────────────────────────────
+  CAPTION */
+    .img-caption {
+      font-family: var(--font-inter); font-size: 10px; line-height: 1.5;
+      color: var(--light-brown); opacity: 0.7;
+      margin-top: 6px; letter-spacing: 0.02em; }
+
+  /* ─────────────────────────────────────────────────────────
+  OVERLAP BLOCK — second image overlaps first at bottom-right */
+    .img-overlap { position: relative; height: 0; margin-bottom: 80px; }
+    .img-overlap .overlap-back  { display: block; width: 70%; position: relative; z-index: 1; }
+    .img-overlap .overlap-back  img,
+    .img-overlap .overlap-back  video { width: 100%; display: block; }
+    .img-overlap .overlap-front {
+      position: absolute; bottom: -40px; right: 0;
+      width: 55%; z-index: 2;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12); }
+    .img-overlap .overlap-front img,
+    .img-overlap .overlap-front video { width: 100%; display: block; }
+
+  /* ─────────────────────────────────────────────────────────
+  SLIDESHOW BLOCK */
+    .img-slideshow { position: relative; margin-bottom: 32px; user-select: none; }
+    .slideshow-track  { overflow: hidden; }
+    .slideshow-slides {
+      display: flex;
+      transition: transform 0.45s cubic-bezier(0.22,1,0.36,1); }
+    .slideshow-slides img,
+    .slideshow-slides video,
+    .slideshow-slides .img-placeholder { flex-shrink: 0; width: 100%; display: block; }
+
+    /* Prev / next arrows */
+    .slideshow-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: none;
+      font-family: var(--font-narkiss); font-size: 18px;
+      color: var(--purple); z-index: 5;
+      padding: 8px; opacity: 0.7;
+      transition: opacity 0.2s;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.4); }
+    .slideshow-arrow:hover { opacity: 1; }
+    .slideshow-arrow.prev { left: 10px; }
+    .slideshow-arrow.next { right: 10px; }
+
+    /* Dot indicators */
+    .slideshow-dots  { display: flex; justify-content: center; gap: 6px; margin-top: 8px; }
+    .slideshow-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--light-brown); opacity: 0.3;
+      cursor: none; transition: opacity 0.2s; }
+    .slideshow-dot.active { opacity: 1; }
+
+  /* ─────────────────────────────────────────────────────────
+  SIDE-BY-SIDE BLOCK
+  JS sets flex-grow on each item to its natural aspect ratio
+  so both images share full width at equal height, no crop. */
+    .img-sidebyside {
+      display: flex; gap: 8px;
+      margin-bottom: 32px; align-items: stretch; }
+    .img-sidebyside-item { flex: 1; overflow: hidden; min-width: 0; }
+    .img-sidebyside img,
+    .img-sidebyside video {
+      width: 100%; height: 100%;
+      object-fit: fill; display: block; }
+
+  /* ─────────────────────────────────────────────────────────
+  LIGHTBOX/ FULL SCREEN ON CLICK */
+    #lightbox {
+      display: flex;
+      position: fixed; inset: 0; z-index: 999998;
+      background: rgba(0,0,0,0);
+      align-items: center; justify-content: center;
+      cursor: zoom-out;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease, background 0.4s ease; }
+    #lightbox.open {
+      opacity: 1;
+      pointer-events: all;
+      backdrop-filter: blur(50px);
+      -webkit-backdrop-filter: blur(50px);
+      background: rgba(0,0,0,0.25); }
+    #lightbox-inner {
+      max-width: 90vw; max-height: 90vh;
+      display: flex; align-items: center; justify-content: center;
+      transform: scale(0.92);
+      transition: transform 0.4s cubic-bezier(0.22,1,0.36,1); }
+    #lightbox.open #lightbox-inner {
+      transform: scale(1); }
+    #lightbox-inner img,
+    #lightbox-inner video {
+      max-width: 90vw; max-height: 90vh;
+      width: auto; height: auto;
+      object-fit: contain; display: block; }

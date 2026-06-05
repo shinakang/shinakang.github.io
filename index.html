@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>shinakang</title>
+<link rel="stylesheet" href="https://use.typekit.net/khh0fkq.css">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 5 C50 5 15 45 15 65 a35 35 0 0 0 70 0 C85 45 50 5 50 5z' fill='%23c4b5c7'/></svg>">
+</head>
+<body>
+
+<!--╔══════════════════════════════════════════════════════════╗
+    ║  Mobile warning                                          ║
+    ╚══════════════════════════════════════════════════════════╝-->
+<div id="mobile-block">
+  <div class="tear">💧</div>
+  <div style="font-size:16px; font-weight:500;">oops...</div>
+  <p>this site is meant for web view only<br><em>(for now...)</em></p>
+</div>
+
+<div id="cursor"></div>
+
+<div id="scroll-wrap">
+
+<!--╔══════════════════════════════════════════════════════════╗
+    ║  REEL SECTION                                            ║
+    ╚══════════════════════════════════════════════════════════╝-->
+
+  <div id="reel-shell">
+    <div id="reel-section">
+
+      <div class="reel-bio" id="reel-bio">
+        Shina is a designer, visual artist, and lifelong student based in Toronto, Canada.
+        She is currently pursuing her BDes in Graphic Design at OCAD University.
+      </div>
+
+      <div class="reel-video-wrap" id="reel-video-wrap">
+        <!--
+          TO USE YOUR VIDEO: replace the div below with:
+          <video autoplay muted loop playsinline>
+            <source src="your-reel.mp4" type="video/mp4">
+          </video>
+        -->
+        <div class="reel-placeholder-text">
+          [ your reel / video goes here ]<br>
+          replace with a &lt;video&gt; tag
+        </div>
+      </div>
+
+      <div class="reel-footer" id="reel-footer">
+        <div class="reel-name-label">shina kang</div>
+        <div class="reel-hint">↓ scroll to enter</div>
+      </div>
+
+    </div>
+  </div><!-- /reel-shell -->
+
+<!--╔══════════════════════════════════════════════════════════╗
+    ║  SITE SECTION                                            ║
+    ╚══════════════════════════════════════════════════════════╝-->
+  <div id="site-section">
+
+<!--╔══════════════════════════════════════════════════════════╗
+    ║  SIDEBAR SECTION                                         ║
+    ╚══════════════════════════════════════════════════════════╝-->
+    <div id="sidebar">
+      <button class="sidebar-name" id="homeBtn">
+        <span class="filter-label-full">shina kang</span>
+        <span class="filter-label-abbr">SK</span>
+      </button>
+
+      <nav>
+
+        <!-- FILTER CHECKLIST
+             data-filter values must match proj-card data-category values.
+             Cards can have space-separated categories e.g. data-category="graphic-design illustration" -->
+        <div class="nav-group">
+          <div class="nav-group-label">Filter</div>
+
+          <div class="filter-item checked" data-filter="all" id="filter-all">
+            <div class="filter-check"></div>
+            <span class="filter-label-full" id="filter-all-label">All</span>
+            <span class="filter-label-abbr">All</span>
+          </div>
+
+          <div class="filter-item checked" data-filter="graphic-design">
+            <div class="filter-check"></div>
+            <span class="filter-label-full">Graphic Design</span>
+            <span class="filter-label-abbr">GD</span>
+          </div>
+
+          <div class="filter-item checked" data-filter="illustration">
+            <div class="filter-check"></div>
+            <span class="filter-label-full">Illustration</span>
+            <span class="filter-label-abbr">IL</span>
+          </div>
+
+          <div class="filter-item checked" data-filter="video">
+            <div class="filter-check"></div>
+            <span class="filter-label-full">Video</span>
+            <span class="filter-label-abbr">MO</span>
+          </div>
+
+          <div class="filter-item checked" data-filter="photography">
+            <div class="filter-check"></div>
+            <span class="filter-label-full">Photography</span>
+            <span class="filter-label-abbr">PH</span>
+          </div>
+
+          <div class="filter-item checked" data-filter="code">
+            <div class="filter-check"></div>
+            <span class="filter-label-full">Code</span>
+            <span class="filter-label-abbr">CD</span>
+          </div>
+
+          <div class="filter-item checked" data-filter="3d">
+            <div class="filter-check"></div>
+            <span class="filter-label-full">3D</span>
+            <span class="filter-label-abbr">3D</span>
+          </div>
+
+          <div class="filter-item checked" data-filter="fine-art">
+            <div class="filter-check"></div>
+            <span class="filter-label-full">Fine Art</span>
+            <span class="filter-label-abbr">FA</span>
+          </div>          
+
+        </div>   
+
+        <div class="nav-group">
+          <div class="nav-group-label">Info</div>
+          <a class="nav-link" data-page="about" href="#">Info</a>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-group-label">Archive</div>
+          <a class="nav-link archive-link" href="#" style="font-size:11px;font-family:var(--font-inter);opacity:0.3;">
+            <span class="filter-label-full">Portfolio 2023 ↗</span>
+            <span class="filter-label-abbr">2023 ↗</span>
+          </a>
+          <a class="nav-link archive-link" href="#" style="font-size:11px;font-family:var(--font-inter);opacity:0.3;">
+            <span class="filter-label-full">Portfolio 2021 ↗</span>
+            <span class="filter-label-abbr">2021 ↗</span>
+          </a>
+        </div>
+
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="mode-toggle" id="modeToggle">
+          <div class="pill"><div class="pill-dot"></div></div>
+          <span id="modeLabel">Light</span>
+        </button>
+      </div>
+    </div><!-- /sidebar -->
+
+    <div id="handle"></div>
+
+    <div id="main-wrap">
+      <div id="main">
+
+        <div class="section-label" id="grid-label">All Works</div>
+
+<!--╔══════════════════════════════════════════════════════════╗
+    ║  PROJECT THUMBNAIL GRID CARDS                            ║
+    ║  goProject args: title, date, skills, for, with,         ║
+    ║                  deliverables                            ║
+    ╚══════════════════════════════════════════════════════════╝-->
+        <div id="project-grid">
+
+    <!-- CODE ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────-->
+          <div class="proj-card" data-category="code" data-order="3" onclick="goProject(
+          'Bad Apple','Fall 2024','Creative Coding <p>Processing','Generative Image System','—','—','Equal Parts Studio<p>Recess Community')">
+          <div class="proj-img-ph"><video autoplay muted loop playsinline>
+          <source src="content/code/apple 1.mp4" type="video/mp4"></video></div>
+          <div class="proj-card-title">Bad Apple</div>
+          <div class="proj-card-cat">Code</div>
+          </div>
+
+          <div class="proj-card" data-category="code" data-order="4" onclick="goProject(
+          'Syntax of a Firework', 'Spring 2026','Creative Coding<p>HTML<p>Javascript','Interactive Web Platform','—','Intro to Code with Ian Jarvis','—')">
+          <div class="proj-img-ph"><video autoplay muted loop playsinline>
+          <source src="content/code/fireworks.mov" type="video/mp4"></video></div>
+          <div class="proj-card-title">Syntax of a Firework</div>
+          <div class="proj-card-cat">Code</div>
+          </div>
+
+          <div class="proj-card" data-category="code" onclick="goProject(
+          'Unicorns','Spring 2026','Creative Coding<p>HTML<p>Javascript','Interactive Web Platform','—','Intro to Code with Ian Jarvis','—')">
+          <div class="proj-img-ph"><video autoplay muted loop playsinline>
+          <source src="content/code/unicorn.mov" type="video/mp4"></video></div>
+          <div class="proj-card-title">Unicorns</div>
+          <div class="proj-card-cat">Code</div>
+          </div>
+
+
+    <!-- PHOTOGRAPHY ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────-->
+          <div class="proj-card" data-category="photography" data-order="5" onclick="goProject(
+          'Mirage of Nostalgia','Fall 2025','Photography<p>Creative Direction<p>Makeup & Styling','Collection of Prints','—','Photography for Communication with Ruth Kaplan','—')">
+          <div class="proj-img-ph">
+          <img src="content/photography/mirage of nostalgia/MON1.webp" alt="Mirage of Nostalgia"></div>
+          <div class="proj-card-title">Mirage of Nostalgia</div>
+          <div class="proj-card-cat">Photography</div>
+          </div>
+
+          <div class="proj-card" data-category="photography" onclick="goProject(
+          'Nocturnal Ritual','Fall 2025','Photography','Print, 15.5” x 21','—','Photography for Communication with Ruth Kaplan','—')">
+          <div class="proj-img-ph">
+          <img src="content/photography/nocturnal ritual/NR1.webp" alt="Nocturnal Ritual"></div>
+          <div class="proj-card-title">Nocturnal Ritual</div>
+          <div class="proj-card-cat">Photography</div>
+          </div>
+          
+          <!--<div class="proj-card" data-category="photography" onclick="goProject(
+          'Echo Studies','Fall 2025','Photography','Collection of Prints','—','Photography for Communication with Ruth Kaplan','—')">
+          <div class="proj-img-ph">
+          <img src="content/photography/nocturnal ritual/NR1.webp" alt="Echo Studies"></div>
+          <div class="proj-card-title">Echo Studies</div>
+          <div class="proj-card-cat">Photography</div>
+          </div>-->
+          
+    <!-- GRAPHIC DESIGN ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────-->
+
+          <div class="proj-card" data-category="graphic-design" data-order="2" onclick="goProject(
+          'Decoding in Practice','Spring 2026','Publication','5.5” × 8.5” binder ring-bound artist book','—','Design Process 2 with Roderick Grant')">
+            <div class="proj-img-ph">
+                <img src="content/graphic design/decoding in practice/DIP1.webp">            
+            </div>
+            <div class="proj-card-title">Decoding in Practice</div>
+            <div class="proj-card-cat">Graphic Design</div>
+          </div>
+
+        <div class="proj-card" data-category="graphic-design" data-order="7" onclick="goProject(
+          'The Subversive Power of Craftivism','Fall 2025','Photography','Print, 15.5” x 21”','—','Photography for Communication with Ruth Kaplan','—')">
+            <div class="proj-img-ph">
+                <img src="content/graphic design/the subversive power of craftivism/C1.webp">            
+            </div>
+            <div class="proj-card-title">The Subversive Power of Craftivism</div>
+            <div class="proj-card-cat">Graphic Design</div>
+          </div>
+
+          <div class="proj-card" data-category="graphic-design illustration" data-order="6"
+            onclick="goProject('On Dreams','Winter 2025','Creative Direction<p>Graphic Design<p>Illustration<p>Publication','8.5” x 11” perfect-bound publication<p>11” x 17” Saddle stitched publication','Abdullahi Ali, Alanoud Emaish, Hodan Yusuf, Saif Khan','Shoot for Peace<p>Amani Bin Shikhan','—')">
+            <div class="proj-img-ph">
+              <video autoplay muted loop playsinline>
+                <source src="content/graphic design/on dreams/OD1.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="proj-card-title">On Dreams</div>
+            <div class="proj-card-cat">Creative Direction, Graphic Design, Illustration, Publication</div>
+          </div>
+
+          <div class="proj-card" data-category="graphic-design" data-order="8"
+            onclick="goProject('Milk Room','Winter 2025','Graphic Design<p>Creative Direction','8 posters<p>& social media graphics','Bunya Muchaeva','—','—')">
+            <div class="proj-img-ph">
+                <img src="content/graphic design/milk room/ML2.webp">            
+            </div>
+            <div class="proj-card-title">Milk Room</div>
+            <div class="proj-card-cat">Graphic Design</div>
+          </div>
+
+          <div class="proj-card" data-category="graphic-design illustration video" data-order="1"
+            onclick="goProject('Field of Dreams Collection','Summer 2025','Creative Direction<p>Graphic Design<p>Illustration<p>Motion','Social Media Video<p>Merchandise System (Pencil, Umbrella, T-Shirt)','Junkie Studio','Junkie Studio','—')">
+            <div class="proj-img-ph">
+              <video autoplay muted loop playsinline>
+                <source src="content/graphic design/field of dreams/FOD0.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="proj-card-title">Field of Dreams Collection</div>
+            <div class="proj-card-cat">Creative Direction, Graphic Design, Illustration, Motion</div>
+          </div>
+
+          <div class="proj-card" data-category="graphic-design"
+            onclick="goProject('MHz: Desire Path','Summer 2025','Creative Direction, Editorial','Identity,<p>Social Media graphics, <p>Spiral bound publicaion','Megahertz Magazine','Koki Kin','—')">
+            <div class="proj-img-ph">
+              <video autoplay muted loop playsinline>
+                <source src="content/graphic design/desire path/DP1.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="proj-card-title">MHz: Desire Path</div>
+            <div class="proj-card-cat">Creative Direction, Editorial</div>
+          </div>
+
+          <div class="proj-card" data-category="graphic-design illustration"
+            onclick="goProject('F Newsmagazine','Fall 2023 <p>& Spring 2024','Editorial<p>Art Direction<p>Graphic Design<p>Illustration','Social Media System <p>& Publication','F Newsmagazine','F Newsmagazine')">
+            <div class="proj-img-ph">
+                <img src="content/graphic design/fnews/FN1.webp">            
+            </div>
+            <div class="proj-card-title">F Newsmagazine</div>
+            <div class="proj-card-cat">Graphic Design, Illustration, Art Direction</div>
+          </div>
+
+          <div class="proj-card" data-category="graphic-design"
+            onclick="goProject('AIGA Posters','2024','Poster Design','Posters','—','SAIC AIGA')">
+            <div class="proj-img-ph">
+                <img src="content/graphic design/aiga/AIGA0.webp">            
+            </div>
+            <div class="proj-card-title">AIGA Posters</div>
+            <div class="proj-card-cat">Graphic Design</div>
+          </div>
+
+          <div class="proj-card" data-category="graphic-design fine-art"
+            onclick="goProject('Falling Out','Spring 2024','Graphic Design,<p>Fine Arts','Zine Installation')">
+            <div class="proj-img-ph">
+              <img src="content/graphic design/falling out/FO2.webp" alt="Falling Out">
+            </div>
+            <div class="proj-card-title">Falling Out</div>
+            <div class="proj-card-cat">Graphic Design, Zine Installation</div>
+          </div>
+
+
+
+
+          <div class="proj-card" data-category="graphic-design"
+            onclick="goProject('T-Minus','Spring 2024','Graphic Design, <p>Visual Storytelling','Calendar Print','—','Intro to Visual Communication with Allison O’Flinn')">
+            <div class="proj-img-ph">
+              <img src="content/graphic design/t minus/TM2.webp" alt="T-Minus">
+            </div>
+            <div class="proj-card-title">T-Minus</div>
+            <div class="proj-card-cat">Graphic Design, Visual Storytelling</div>
+          </div>
+
+          <div class="proj-card" data-category="graphic-design"
+            onclick="goProject('Taste the Story','Winter 2024','Visual Storytelling<p>Package Design','10 Condiment Packets','—','Research Studio II with Amy Yoes, Amy Vogel, Laura Davis')">
+            <div class="proj-img-ph">
+              <img src="content/graphic design/taste the story/TTS2.webp" alt="Taste the Story">
+            </div>
+            <div class="proj-card-title">Taste the Story</div>
+            <div class="proj-card-cat">Graphic Design, Visual Storytelling</div>
+          </div>
+
+          <div class="proj-card" data-category="graphic-design"
+            onclick="goProject('Dream Archive','Winter 2023','Graphic Design','Poster <p>& Social Media Design')">
+            <div class="proj-img-ph">
+              <img src="content/graphic design/dream archive/DA1.webp" alt="Dream Archive">
+            </div>
+            <div class="proj-card-title">Dream Archive</div>
+            <div class="proj-card-cat">Graphic Design</div>
+          </div>
+
+
+          <div class="proj-card" data-category="graphic-design"
+            onclick="goProject('Invisible Cities','Spring 2024','Book Design, <p>Typography','Handmade artist book','—','Beginning Typography with Maura Frana')">
+            <div class="proj-img-ph">
+              <img src="content/graphic design/invisible cities/IC1.webp" alt="Invisible Cities">
+            </div>
+            <div class="proj-card-title">Invisible Cities</div>
+            <div class="proj-card-cat">Graphic Design</div>
+          </div>
+
+          <div class="proj-card" data-category="graphic-design illustration"
+            onclick="goProject('SAIC Blend','Spring 2024','Apparel Design, <p>Graphic Design, <p>Illustration','Apparel','—','School of the Art Institute of Chicago')">
+            <div class="proj-img-ph">
+              <img src="content/graphic design/SAIC BLEND/SB3.webp" alt="SAIC BLEND">
+            </div>
+            <div class="proj-card-title">SAIC Blend</div>
+            <div class="proj-card-cat">Apparel Design, Graphic Design, Illustration</div>
+          </div>
+
+          <div class="proj-card" data-category="graphic-design video"
+            onclick="goProject('Design How-Tos','2024','Book Design, Typography','OCAD University','—','5.5″ × 8.5″ binder ring-bound artist book')">
+            <div class="proj-img-ph">
+              <video autoplay muted loop playsinline>
+                <source src="content/graphic design/overdrive/AA1.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="proj-card-title">Design How-Tos</div>
+            <div class="proj-card-cat">Graphic Design</div>
+          </div>
+
+          <div class="proj-card" data-category="graphic-design video"
+            onclick="goProject('Dwell Motion Studies','Spring 2026','Motion Design','Series of motion studies','—','Design Process 2 with Roderick Grant ')">
+            <div class="proj-img-ph">
+              <video autoplay muted loop playsinline>
+                <source src="content/graphic design/dwell/8_1.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="proj-card-title">Dwell Motion Studies</div>
+            <div class="proj-card-cat">Graphic Design</div>
+          </div>
+
+        <!-- ILLUSTRATION ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────-->
+          <div class="proj-card" data-category="graphic-design"
+            onclick="goProject('Sketchbook','2024','Book Design, Typography','OCAD University','—','5.5″ × 8.5″ binder ring-bound artist book')">
+            <div class="proj-img-ph">
+              <video autoplay muted loop playsinline>
+                <source src="content/graphic design/dwell/8_1.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="proj-card-title">Sketchbook</div>
+            <div class="proj-card-cat">Illustration</div>
+          </div>
+
+          <div class="proj-card" data-category="illustration"
+            onclick="goProject('sleep','2024','Book Design, Typography','OCAD University','—','5.5″ × 8.5″ binder ring-bound artist book', '-', 'true')">
+            <div class="proj-img-ph">
+              <img src="content/illustration/sleep.webp" alt="sleep">
+            </div>
+            <div class="proj-card-title">sleep</div>
+            <div class="proj-card-cat">Illustration</div>
+          </div>
+
+          <div class="proj-card" data-category="fine-art" 
+            onclick="goProject('Beyond and Beneath','2024','Book Design, Typography','OCAD University','—','5.5″ × 8.5″ binder ring-bound artist book', '-', 'true')">
+            <div class="proj-img-ph">
+              <img src="content/fine art/BB.webp" alt="Beyond and Beneath">
+            </div>
+            <div class="proj-card-title">Beyond and Beneath</div>
+            <div class="proj-card-cat">Sculpture</div>
+          </div>
+
+          <div class="proj-card" data-category="fine-art illustration"
+            onclick="goProject('No Escape','2024','Book Design, Typography','OCAD University','—','5.5″ × 8.5″ binder ring-bound artist book', '-', 'true')">
+            <div class="proj-img-ph">
+              <img src="content/fine art/NE.webp" alt="Beyond and Beneath">
+            </div>
+            <div class="proj-card-title">No Escape</div>
+            <div class="proj-card-cat">Painting Sculpture</div>
+          </div>
+
+
+          <div class="proj-card" data-category="fine-art illustration"
+            onclick="goProject('Comfort of Sadness','2024','Book Design, Typography','OCAD University','—','5.5″ × 8.5″ binder ring-bound artist book', '-', 'true')">
+            <div class="proj-img-ph">
+              <img src="content/fine art/COS.webp" alt="Comfort of Sadness">
+            </div>
+            <div class="proj-card-title">Comfort of Sadness</div>
+            <div class="proj-card-cat">Drawing</div>
+          </div>
+
+          <div class="proj-card" data-category="illustration"
+            onclick="goProject('maybe','2024','Book Design, Typography','OCAD University','—','5.5″ × 8.5″ binder ring-bound artist book', '-', 'true')">
+            <div class="proj-img-ph">
+              <img src="content/illustration/maybe.webp" alt="maybe">
+            </div>
+            <div class="proj-card-title">maybe</div>
+            <div class="proj-card-cat">Illustration</div>
+          </div>
+
+          <div class="proj-card" data-category="illustration"
+            onclick="goProject('CW Postcards','2024','Book Design, Typography','OCAD University','—','5.5″ × 8.5″ binder ring-bound artist book', '-', 'true')">
+            <div class="proj-img-ph">
+              <img src="content/illustration/cw.webp" alt="maybe">
+            </div>
+            <div class="proj-card-title">CW Postcards</div>
+            <div class="proj-card-cat">Illustration</div>
+          </div>  
+
+
+          
+        <!-- FINE ART ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────-->
+
+          <div class="proj-card" data-category="fine-art video"
+            onclick="goProject('Girls','-','-','-','—','-', '-', 'true')">
+            <div class="proj-img-ph">
+              <video autoplay muted loop playsinline>
+                <source src="content/fine art/GIRLS_1_2.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="proj-card-title">Girls</div>
+            <div class="proj-card-cat">Painting</div>
+          </div>  
+
+        <!-- 3D ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────-->
+
+          <div class="proj-card" data-category="3d video"
+            onclick="goProject('Last Train','-','-','-','—','-', '-', 'true')">
+            <div class="proj-img-ph">
+              <video autoplay muted loop playsinline>
+                <source src="content/3d/Comp 4.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="proj-card-title">Last Train</div>
+            <div class="proj-card-cat">3D</div>
+          </div>  
+
+
+
+
+
+        </div><!-- /project-grid -->
+
+<!--╔══════════════════════════════════════════════════════════╗
+    ║  ABOUT & CONTACT PAGE                                    ║
+    ╚══════════════════════════════════════════════════════════╝-->
+        <div class="page" id="page-about">
+          <div class="section-label">About</div>
+          <div class="about-layout">
+            <div>
+              <div class="about-text">
+                <p>Interdisciplinary designer, visual artist, and lifelong student driven by a desire to create work that resonates with, engages, and connects diverse audiences.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-section-label">Contact</div>
+          <div class="contact-list">
+            <div class="contact-line">
+              <span class="contact-label">Email</span>
+              <span class="contact-value">shinakang112@gmail.com</span>
+            </div>
+            <div class="contact-line">
+              <span class="contact-label">Instagram</span>
+              <span class="contact-value">@_cryparty</span>
+            </div>
+            <div class="contact-line">
+              <span class="contact-label">LinkedIn</span>
+              <span class="contact-value">https://www.linkedin.com/in/shina-kang-583269222/</span>
+            </div>
+          </div>
+        </div><!-- /page-about -->
+
+      </div><!-- /main -->
+
+<!--╔══════════════════════════════════════════════════════════╗
+    ║  PROJECT OVERLAY                                         ║
+    ╚══════════════════════════════════════════════════════════╝-->
+      <div id="project-overlay">
+
+        <!-- LAYER 1: description column -->
+        <div id="proj-layer1">
+          <div class="proj-col-text" id="projColText">
+            <button class="back-btn" id="backBtn">←</button>
+
+            <div class="project-meta-bar">
+              <div class="meta-item" id="meta-item-date">
+                <div class="meta-label">Date</div>
+                <div class="meta-value" id="meta-date">2024</div>
+              </div>
+              <div class="meta-item" id="meta-item-skills">
+                <div class="meta-label">Skills</div>
+                <div class="meta-value" id="meta-skills">—</div>
+              </div>
+              <div class="meta-item" id="meta-item-outputs">
+                <div class="meta-label">Outputs</div>
+                <div class="meta-value" id="meta-outputs">—</div>
+              </div>
+              <div class="meta-item" id="meta-item-with">
+                <div class="meta-label">With</div>
+                <div class="meta-value" id="meta-with">—</div>
+              </div>
+              <div class="meta-item" id="meta-item-for">
+                <div class="meta-label">For</div>
+                <div class="meta-value" id="meta-for">—</div>
+              </div>
+              <div class="meta-item" id="meta-item-through">
+                <div class="meta-label">Through</div>
+                <div class="meta-value" id="meta-through">—</div>
+              </div>
+
+            </div>
+
+            <div class="proj-meta-divider"></div>
+            <div class="project-title-big" id="proj-title-big">Project Title</div>
+            <div class="project-desc" id="proj-desc">Project description.</div>
+          </div>
+        </div><!-- /proj-layer1 -->
+
+        <!-- LAYER 2: image column -->
+        <div id="proj-layer2">
+          <div id="proj-handle"></div>
+          <div class="proj-col-images-scroll">
+            <div class="project-images-stack" id="proj-images"></div>
+          </div>
+        </div><!-- /proj-layer2 -->
+
+      </div><!-- /project-overlay -->
+
+    </div><!-- /main-wrap -->
+  </div><!-- /site-section -->
+</div><!-- /scroll-wrap -->
+
+<!-- data.js must load before main.js -->
+<script src="data.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
