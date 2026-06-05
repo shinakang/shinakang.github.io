@@ -176,7 +176,7 @@ if (PUBLISH) {
   const gridLabel    = document.getElementById('grid-label');
   const projectGrid  = document.getElementById('project-grid');
 
-  const ALL_CATS = ['graphic-design','illustration','motion','photography','code', '3d', 'fine-art' ];
+  const ALL_CATS = ['graphic-design','illustration','video','photography','code', '3d', 'fine-art' ];
   let activeFilters = new Set(['all', ...ALL_CATS]);
 
   filterAllEl.addEventListener('mouseenter', () => {
