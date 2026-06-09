@@ -13,7 +13,7 @@
     cursor.classList.toggle('big', !!h); });
 
 /* ── PUBLISH MODE ───────────────────────────────────────── */
-  const PUBLISH = true; // set to true to enable publish mode
+  const PUBLISH = false; // set to true to enable publish mode
 
 if (PUBLISH) {
     document.getElementById('reel-shell').remove();
@@ -336,6 +336,19 @@ if (PUBLISH) {
     layer2.style.left = (newW + 5) + 'px'; });
   document.addEventListener('mouseup', () => {
     resizingProj = false; document.body.style.userSelect = ''; });
+
+/* ── PROJ HANDLE PROXIMITY ──────────────────────────────── */
+  document.addEventListener('mousemove', e => {
+    const handle = document.getElementById('proj-handle');
+    if (!handle) return;
+    const rect = handle.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const dist = Math.abs(e.clientX - centerX);
+    const radius = 40;
+    const close = dist < radius;
+    handle.style.setProperty('--handle-opacity', close ? (dist / radius) * 0.5 : 0.5);
+    handle.style.setProperty('--handle-color', close ? 'var(--purple)' : 'var(--light-brown)');
+  });
 
 /* ── PROJECT OVERLAY ────────────────────────────────────── */
   const overlay = document.getElementById('project-overlay');
