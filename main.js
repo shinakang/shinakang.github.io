@@ -13,7 +13,7 @@
     cursor.classList.toggle('big', !!h); });
 
 /* ── PUBLISH MODE ───────────────────────────────────────── */
-  const PUBLISH = false; // set to true to enable publish mode
+  const PUBLISH = true; // set to true to enable publish mode
 
 if (PUBLISH) {
     document.getElementById('reel-shell').remove();
@@ -524,9 +524,6 @@ if (PUBLISH) {
     dots.forEach((d,i) => d.addEventListener('click', () => goTo(i)));
     if (el.dataset.autoplay === 'true') {
       setInterval(() => goTo(current + 1), 3000); } }
-
-
-
 
 /* ── LIGHTBOX/ FULL SCREEN ON CLICK ───────────────────────────────────────────── */
   function initLightbox() {
