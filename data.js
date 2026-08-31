@@ -139,10 +139,10 @@ const imageLayouts = {
     { type: 'video', src: 'content/code/apple 2.mp4' }],
 
     'Syntax of a Firework': [
-    { type: 'video', src: 'content/code/fireworks.mov' }],
+    { type: 'video', src: 'content/code/fireworks_1.mp4' }],
     
     'Unicorns': [
-    { type: 'video', src: 'content/code/unicorn.mov' }],
+    { type: 'video', src: 'content/code/unicorn.mp4' }],
 
   /* PHOTOGRAPHY ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────*/
   
