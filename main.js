@@ -262,7 +262,7 @@ if (PUBLISH) {
 
   const ALL_CATS = ['graphic-design','illustration','video','photography','code', '3d', 'fine-art' ];
   const HOME_VIEW = 'home';
-  let activeFilters = new Set(['all', ...ALL_CATS]);
+  let activeFilters = new Set(['graphic-design']);
 
   filterAllEl.addEventListener('mouseenter', () => {
     if (activeFilters.has('all')) filterAllLbl.textContent = 'Deselect All'; });
@@ -388,7 +388,12 @@ if (PUBLISH) {
   function loadFiltersFromUrl() {
     const params = new URLSearchParams(window.location.search);
     const view = params.get('view');
-    if (!view) return;
+    if (!view) {
+      activeFilters = new Set(['graphic-design']);
+      applyFilters();
+      skipIntroToGrid();
+      return;
+    }
 
     if (view === HOME_VIEW || view === 'graphic-design') {
       activeFilters = new Set(['all', ...ALL_CATS]);
