@@ -261,6 +261,7 @@ if (PUBLISH) {
   const projectGrid  = document.getElementById('project-grid');
 
   const ALL_CATS = ['graphic-design','illustration','video','photography','code', '3d', 'fine-art' ];
+  const HOME_VIEW = 'home';
   let activeFilters = new Set(['all', ...ALL_CATS]);
 
   filterAllEl.addEventListener('mouseenter', () => {
@@ -356,13 +357,23 @@ if (PUBLISH) {
 
 /* ── URL SYNC FOR FILTERS ───────────────────────────────── */
   function syncUrlFromFilters() {
-    const url = new URL(window.location);
-    if (activeFilters.has('all') || activeFilters.size === 0) {
-      url.searchParams.delete('view');
-    } else {
-      const cats = ALL_CATS.filter(c => activeFilters.has(c));
-      url.searchParams.set('view', cats.join(','));
+    const url = new URL(window.location.href);
+    const selectedCats = ALL_CATS.filter(c => activeFilters.has(c));
+    const isHomeState = activeFilters.has('all') || activeFilters.size === 0;
+
+    if (isHomeState) {
+      url.searchParams.set('view', HOME_VIEW);
+      history.replaceState(null, '', url);
+      return;
     }
+
+    if (selectedCats.length === 1 && selectedCats[0] === 'graphic-design') {
+      url.searchParams.delete('view');
+      history.replaceState(null, '', url);
+      return;
+    }
+
+    url.searchParams.set('view', selectedCats.join(','));
     history.replaceState(null, '', url);
   }
 
@@ -378,6 +389,14 @@ if (PUBLISH) {
     const params = new URLSearchParams(window.location.search);
     const view = params.get('view');
     if (!view) return;
+
+    if (view === HOME_VIEW || view === 'graphic-design') {
+      activeFilters = new Set(['all', ...ALL_CATS]);
+      applyFilters();
+      skipIntroToGrid();
+      return;
+    }
+
     const cats = view.split(',').map(s => s.trim()).filter(c => ALL_CATS.includes(c));
     if (cats.length === 0) return;
     activeFilters = new Set(cats);
