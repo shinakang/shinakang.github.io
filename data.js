@@ -320,7 +320,7 @@ const imageLayouts = {
       { type: 'sidebyside',
             left:  { type: 'image', src: 'content/graphic design/roots/RO7.webp'},
             right: { type: 'image', src: 'content/graphic design/roots/RO9.webp'},},  
-      { type: 'image', src: 'content/graphic design/roots/RO10.webp'},],
+      { type: 'image', src: 'content/graphic design/roots/RO100.webp'},],
     
   'SAIC Blend': [
       { type: 'image', src: 'content/graphic design/SAIC BLEND/SB1.webp'},
