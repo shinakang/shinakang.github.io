@@ -588,6 +588,8 @@ if (PUBLISH) {
     'Overdrive Design':    'https://overdrivedesign.com/',
     'F Newsmagazine':      'https://fnewsmagazine.com/',
     'School of the Art Institue of Chicago':  'https://www.saic.edu/',
+    'Roots':  'https://www.roots.com/ca/en/homepage',
+    'OCAD University':  'https://www.ocadu.ca/',
     'Megahertz Magazine':  'https://www.instagram.com/mhz.print/',
 
   };

@@ -47,6 +47,9 @@
     'Milk Room':
       '<p>Designed for Bunya Muchaeva’s first solo exhibition, <em>Milk Room</em>, this series of posters embodies Bunya’s sterile, sensual, and restrained aesthetic through the use of organic forms and visual restraint.',
 
+    'Limited Edition Roots X OCAD U Merchandise':
+      '<p>The winning designs of Roots and OCAD University’s 2026 merchandise design collaboration. Launched during OCAD U’s 2026 Welcome Day, the collection sold out within three days. <p>Booth photography by Shane D’Costa.<p>✄ ◦ ◦ ◦<p>The T-shirt transform roots into a typographic element, subtly spelling out the words “Roots” and “OCAD.” By merging lettering with organic root forms, the designs symbolize the union of both identities into a single, natural illustration. The roots continuously extend outward representing growth, connection, and the limitless potential of creativity.<p>The crewneck uses OCAD U’s Sharp Centre for Design as a frame where creativity, imagination, and inquiry unfold. Hidden details invite viewers to look closer, rewarding curiosity and discovery. ',
+
     'Design How-Tos':
       '<p>Educational social media series created during my internship at Overdrive Design. Analog Archive explores historic design tools and methods, while Design Defrag reveals the hidden potential of everyday designs through the application of fundamental design principles.<p>I led the projects from research and scripting to asset creation, motion graphics, AI voiceover, and sound design, working with minimal supervision and receiving final edits from senior designers Marissa Ouellette and Aysha Noora.',
 
@@ -309,6 +312,15 @@ const imageLayouts = {
             right: { type: 'image', src: 'content/graphic design/fnews/may4.webp'},},    
 
       ,],
+    
+    'Limited Edition Roots X OCAD U Merchandise': [
+      { type: 'image', src: 'content/graphic design/roots/RO8.webp'},
+      { type: 'image', src: 'content/graphic design/roots/RO11.webp'},
+      { type: 'image', src: 'content/graphic design/roots/RO12.webp'},
+      { type: 'sidebyside',
+            left:  { type: 'image', src: 'content/graphic design/roots/RO7.webp'},
+            right: { type: 'image', src: 'content/graphic design/roots/RO9.webp'},},  
+      { type: 'image', src: 'content/graphic design/roots/RO10.webp'},],
     
   'SAIC Blend': [
       { type: 'image', src: 'content/graphic design/SAIC BLEND/SB1.webp'},
